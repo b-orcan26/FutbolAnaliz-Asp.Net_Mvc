@@ -1,0 +1,90 @@
+﻿@using FutbolAnalizWeb.ViewModels
+@model LigDetay
+
+<style>
+    .shadowDiv {
+        -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+        background-color: white;
+    }
+
+    .col-6 {
+        padding: 0 !important;
+    }
+    b{
+        font-weight:800;
+        font-size:20px;
+    }
+ 
+    p{
+        font-weight:700;
+        font-size:19px;
+    }
+
+</style>
+
+    <div class="row" style="margin:0!important; padding:0!important;">
+        <div class="col-6 d-flex  text-center mt-1 mb-2" >
+            <div class=" shadowDiv flex-fill  py-3 mx-2 divBg">
+                <b >Ligde Atilan Gol Sayisi</b><br />
+                <p >@Model.ToplamGol</p>
+            </div>
+        </div>
+        <div class="col-6 d-flex  text-center mt-1 mb-2">
+            <div class=" shadowDiv flex-fill py-3 ml-2 mr-4">
+                <b class="pb-1">Mac Basina Atilan Gol Ortalamasi</b><br />
+                <p >@Model.OrtalamaGol</p>
+            </div>
+            </div>
+            <div class="col-6 d-flex text-center my-2 ">
+                <div class="shadowDiv flex-fill mx-2 py-1">
+                    <b class="pb-1">En Cok Gol Atan Takim</b><br />
+                    @{
+                        var base64_1 = Convert.ToBase64String(Model.EnCokGolAtanTakim.takim_logo);
+                        var imgSrc_1 = String.Format("data:image/gif;base64,{0}", base64_1);
+                    }
+
+                    <img src="@imgSrc_1" />
+                    <p>@Model.EnCokGolAtanTakim.takim_ad</p>
+                </div>
+            </div>
+            <div class="col-6 d-flex text-center d-block my-2 ">
+                <div class="shadowDiv flex-fill ml-2 mr-4 py-1 divBg">
+                    <b class="pb-1">En Az Gol Yiyen Takim</b><br />
+                    @{
+                        var base64_2 = Convert.ToBase64String(Model.EnAzGolYiyenTakim.takim_logo);
+                        var imgSrc_2 = String.Format("data:image/gif;base64,{0}", base64_2);
+                    }
+
+                    <img src="@imgSrc_2" />
+                    <p>@Model.EnAzGolYiyenTakim.takim_ad</p>
+                </div>
+                </div>
+            <div class="col-6 d-flex text-center d-block my-2 ">
+                <div class="shadowDiv flex-fill mx-2 py-1">
+                    <b class="pb-2">Ic Sahada En Basarili Takim</b><br />
+                    @{
+                        var base64_3 = Convert.ToBase64String(Model.IcSahaBasariliTakim.takim_logo);
+                        var imgSrc_3 = String.Format("data:image/gif;base64,{0}", base64_3);
+                    }
+
+                    <img src="@imgSrc_3" />
+                    <p>@Model.IcSahaBasariliTakim.takim_ad</p>
+                    </div>
+                </div>
+            <div class="col-6 d-flex text-center d-block my-2 ">
+                <div class="shadowDiv flex-fill ml-2 mr-4 py-1">
+                    <b class="pb-2">Deplasmanda En Basarili Takim</b><br />
+                    @{
+                        var base64_4 = Convert.ToBase64String(Model.DisSahaBasariliTakim.takim_logo);
+                        var imgSrc_4 = String.Format("data:image/gif;base64,{0}", base64_4);
+                    }
+
+                    <img src="@imgSrc_4" />
+                    <p>@Model.DisSahaBasariliTakim.takim_ad</p>
+                    </div>
+                </div>
+            </div>
+
+ 

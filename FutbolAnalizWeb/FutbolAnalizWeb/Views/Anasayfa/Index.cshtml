@@ -1,0 +1,106 @@
+﻿@using FutbolAnalizWeb.ViewModels;
+@model List<PuanDurumu>
+
+@{
+    ViewBag.Title = "Index";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<style>
+    tr {
+        font-size: 12px;
+        padding: 0px;
+        margin: 0px;
+        height: 5px !important;
+    }
+
+    table {
+        padding: 0;
+        margin: 0;
+        background-color: white;
+        line-height: 7px;
+        margin-left: 10px;
+        border-radius: 10px;
+    }
+
+    tbody {
+        line-height: 7px;
+    }
+
+
+
+        tbody > tr:hover {
+            background-color: mediumseagreen;
+            cursor: pointer;
+        }
+</style>
+
+<div class="row">
+    <div class="col-12 col-lg-4 d-block ">
+        <table class="table table-responsive-lg  float-left d-inline " id="table" style="margin-top:55px;">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Takim</th>
+                    <th scope="col">O</th>
+                    <th scope="col">G</th>
+                    <th scope="col">B</th>
+                    <th scope="col">M</th>
+                    <th scope="col">A</th>
+                    <th scope="col">Y</th>
+                    <th scope="col">Av</th>
+                    <th scope="col">Puan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr class="t">
+                        <td id="tdTakimId" hidden>@Model[i].takim_id</td>
+                        <th scope="row">@{var j = i + 1;}@j</th>
+                        <td>
+                            @{
+                                var takimAdi = Model[i].takim_ad;
+                                takimAdi = takimAdi.Length > 11 ? takimAdi.Substring(0, 11) + ".." : takimAdi;
+                            }
+                            @takimAdi
+                        </td>
+                        <td>@Model[i].Oynadigi</td>
+                        <td>@Model[i].Galibiyet</td>
+                        <td>@Model[i].Beraberlik</td>
+                        <td>@Model[i].Maglubiyet</td>
+                        <td>@Model[i].Attigi</td>
+                        <td>@Model[i].Yedigi</td>
+                        <td>@Model[i].Averaj</td>
+                        <td>@Model[i].Puan</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12 col-lg-8 " id="divDetay" style="margin-top:55px;">
+
+        @{Html.RenderAction("LigDetay", new { lig_id = ViewBag.lig.lig_id });}
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $('.t').on('click', function () {
+        mTakim_id = $(this).find('td').first().text();
+
+        $.ajax({
+            url: "/Anasayfa/TakimDetay/?takim_id=" + mTakim_id,
+            type: 'GET',
+            async: true,
+            dataType: 'html',
+            success: function (data) {
+                $("#divDetay").css("margin-top", "0px");
+                $("#divDetay").html(data);
+
+            }
+        });
+    })
+</script>

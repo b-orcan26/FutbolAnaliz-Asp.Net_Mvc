@@ -1,0 +1,444 @@
+﻿@using FutbolAnalizWeb.ViewModels
+@model TakimDetay
+
+
+
+
+
+
+    <style>
+    .shadowDiv {
+        -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+        background-color: white;
+    }
+
+    p {
+        height: 100%;
+        align-items: flex-end;
+    }
+
+    .containerCentered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+       @@media only screen and (max-width: 767px) {
+  c {
+    background-color: lightblue;
+  }
+}
+
+    </style>
+
+
+<div class="container text-center">
+    <div class="row" style="margin:0!important; padding:0!important;">
+
+        <div class="col-12 pb-1" style="border-bottom:1px solid white;">
+            @{
+                var base64_11 = Convert.ToBase64String(Model.MyTakim.takim_logo);
+                var imgSrc_11 = String.Format("data:image/gif;base64,{0}", base64_11);
+            }
+
+
+            <img src="@imgSrc_11" style="width:50px; height:50px;" class="d-inline" />
+            <h5 class="d-inline my-auto" style="color:white; height:50px;">@Model.MyTakim.takim_ad</h5>
+
+        </div>
+        <!--    son 5 mac    -->
+
+        <div class="col-12 col-lg-6 text-center mt-4  d-block d-lg-inline" style="height:300px; width:inherit; background-color:white;">
+            <h4 style="border-bottom:1px solid black;">Son 5 Mac</h4>
+            <div class="row ">
+
+                @for (int i = 0; i < Model.Son5MacListesi.Count; i++)
+                {
+
+                    <div class="col-0 col-lg-1 my-1"></div>
+
+
+                    <div class="col-12 col-lg-10 my-1 ">
+                        <div class="d-flex nav justify-content-center row mt-1">
+                            <div class="col-0 col-lg-1"></div>
+                            @{
+                                var takimAdiOrg = Model.Son5MacListesi[i].evSahibi;
+
+                                var takimAdi = takimAdiOrg.Length > 11 ? takimAdiOrg.Replace(" ", ".").Substring(0, 11) + ".." : takimAdiOrg;
+                                takimAdiOrg = takimAdiOrg.Replace(" ", ".");
+                            }
+                            <div class="col-4 col-lg-4 d-flex text-center ">
+                                <p class="float-right d-flex  align-content-end" data-toggle="tooltip" data-placement="left" title=@takimAdiOrg>
+
+                                    @takimAdi
+
+                                <p />
+                            </div>
+                            <div class="col-3 col-lg-2 d-flex align-items-lg-center">
+
+                                <div style="position:absolute; top:0px; font-size:10px; padding-left:5px; ">
+                                    iy:@Model.Son5MacListesi[i].eviy_sk - @Model.Son5MacListesi[i].depiy_sk
+                                </div>
+                                <div style="position:absolute; top:10px;">
+                                    <h5>  @Model.Son5MacListesi[i].evms_sk - @Model.Son5MacListesi[i].depms_sk</h5>
+                                </div>
+
+                            </div>
+                            @{
+                                var takimAdiDepOrg = Model.Son5MacListesi[i].deplasman;
+
+                                var takimAdiDep = takimAdiDepOrg.Length > 11 ? takimAdiDepOrg.Replace(" ", ".").Substring(0, 11) + ".." : takimAdiDepOrg;
+                                takimAdiDepOrg = takimAdiDepOrg.Replace(" ", ".");
+                            }
+                            <div class="col-4 col-lg-4  d-flex ">
+                                <p class="float-left d-flex  align-content-start" data-toggle="tooltip" data-placement="right" title=@takimAdiDepOrg>
+
+                                    @takimAdiDep
+
+
+                                </p>
+                            </div>
+                            <div class="col-1 col-lg-1"></div>
+                        </div>
+                    </div>
+                    <div class="col-0 col-lg-1 my-1"></div>
+
+                }
+
+
+            </div>
+        </div>
+
+        <!--    İy Gol Ms gol toplam gol    -->
+
+        <div class="col-12 d-block d-lg-inline col-lg-6 mt-4" style="height:300px; width:initial;">
+
+            <!-- Line Chart -->
+            <ul class="nav nav-tabs bg-dark nav-fill" id="myTab" role="tablist">
+                <li class="nav-item" >
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#chartContainer" role="tab" aria-controls="home" aria-selected="true">Genel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#chartContainerIy" role="tab" aria-controls="profile" aria-selected="false">İy Goller</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#chartContainerTg" role="tab" aria-controls="contact" aria-selected="false">Toplam Gol</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active " id="chartContainer" role="tabpanel" aria-labelledby="home-tab">...</div>
+                <div class="tab-pane fade " id="chartContainerIy" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                <div class="tab-pane fade " id="chartContainerTg" role="tabpanel" aria-labelledby="contact-tab">...</div>
+            </div>
+
+
+
+        </div>
+
+        <div class="w-100"></div>
+        <!--    ic dis performans    -->
+
+        <div class="col-12 d-block d-lg-inline col-lg-6 mt-4  text-center " style="background-color:white; height:300px;">
+            <h4 class="mb-1 mb-lg-0" style="border-bottom:1px solid black;">Ic ve Dis Saha Performanslari</h4>
+            <div id="centeredDiv">
+                <h5 class="text-center py-1">Ic Saha Performansi</h5>
+                <table class="table d-inline table-responsive   ">
+                    <thead>
+                        <tr>
+                            <th scope="col">O</th>
+                            <th scope="col">G</th>
+                            <th scope="col">B</th>
+                            <th scope="col">M</th>
+                            <th scope="col">A</th>
+                            <th scope="col">Y</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td>@Model.IcSahaPerformansi.OynadigiMacSayisi</td>
+                            <td>@Model.IcSahaPerformansi.GalibiyetSayisi</td>
+                            <td>@Model.IcSahaPerformansi.MaglubiyetSayisi</td>
+                            <td>@Model.IcSahaPerformansi.BeraberlikSayisi</td>
+                            <td>@Model.IcSahaPerformansi.AttigiGol</td>
+                            <td>@Model.IcSahaPerformansi.YedigiGol</td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <h5 class="py-1">Dis Saha Performansi</h5>
+
+                <table class="table  d-inline table-responsive ">
+                    <thead>
+                        <tr>
+                            <th scope="col">O</th>
+                            <th scope="col">G</th>
+                            <th scope="col">B</th>
+                            <th scope="col">M</th>
+                            <th scope="col">A</th>
+                            <th scope="col">Y</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.DisSahaPerformansi.OynadigiMacSayisi</td>
+                            <td>@Model.DisSahaPerformansi.GalibiyetSayisi</td>
+                            <td>@Model.DisSahaPerformansi.MaglubiyetSayisi</td>
+                            <td>@Model.DisSahaPerformansi.BeraberlikSayisi</td>
+                            <td>@Model.DisSahaPerformansi.AttigiGol</td>
+                            <td>@Model.DisSahaPerformansi.YedigiGol</td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--   au 2.5 3.5 1.5    -->
+
+        <div class="col-12 d-block d-lg-inline col-lg-6 mt-4 " style="height:300px; width:initial;">
+
+            <ul class="nav nav-tabs bg-dark nav-fill" id="myTab" role="tablist" style="width:100%">
+                <li class="nav-item ">
+                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#au15" role="tab" aria-controls="home" aria-selected="true">A/U 1.5</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#au25" role="tab" aria-controls="profile" aria-selected="false">A/U 2.5</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#au35" role="tab" aria-controls="contact" aria-selected="false">A/U 3.5</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade " id="au15" role="tabpanel" aria-labelledby="home-tab">...</div>
+                <div class="tab-pane fade show active " id="au25" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                <div class="tab-pane fade " id="au35" role="tabpanel" aria-labelledby="contact-tab">...</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script type="text/javascript">
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+
+    title: {
+
+    },
+        axisY: {
+
+        includeZero: true
+    },
+    axisX: {
+        title: "Hafta",
+        includeZero: true
+    },
+	toolTip: {
+		shared: true
+	},
+	data: [{
+		type: "line",
+		name: "Attigi Goller",
+		showInLegend: true,
+		dataPoints: @Html.Raw(Model.AttigiSeries)
+	}, {
+		type: "line",
+		name: "Yedigi Goller",
+		showInLegend: true,
+		dataPoints: @Html.Raw(Model.YedigiSeries)
+	}]
+});
+chart.render();
+
+    var chart1 = new CanvasJS.Chart("chartContainerIy", {
+        animationEnabled: true,
+
+        title: {
+
+        },
+        axisY: {
+
+        includeZero: true
+    },
+    axisX: {
+        title: "Hafta",
+        includeZero: true
+    },
+	toolTip: {
+		shared: true
+	},
+	data: [{
+		type: "line",
+		name: "Ilk Yari Attigi Goller",
+		showInLegend: true,
+		dataPoints: @Html.Raw(Model.MaclarindakiAttigiIyGol)
+	}, {
+		type: "line",
+		name: "Ilk Yari Yedigi Goller",
+		showInLegend: true,
+		dataPoints: @Html.Raw(Model.MaclarindakiYedigiIyGol)
+	}]
+});
+    chart1.render();
+
+    var chart2 = new CanvasJS.Chart("chartContainerTg", {
+        animationEnabled: true,
+
+        title: {
+
+        },
+        axisY: {
+
+        includeZero: true
+    },
+    axisX: {
+        title: "Hafta",
+        includeZero: true
+    },
+	toolTip: {
+		shared: true
+	},
+	data: [{
+		type: "line",
+		name: "Bir macta atılan toplam gol",
+		showInLegend: true,
+		dataPoints: @Html.Raw(Model.MaclarindakiToplamGol)
+	}]
+});
+chart2.render();
+
+    //
+
+    var chart3 = new CanvasJS.Chart("au15", {
+	theme: "light1", // "light1", "light2", "dark1", "dark2"
+
+        animationEnabled: true,
+
+	title: {
+
+        },
+        axisY: {
+
+            includeZero: true
+        },
+        axisX: {
+
+            includeZero: true
+        },
+
+        subtitles: [{
+
+		text: "1,5 Gol"
+	}],
+	data: [{
+		type: "pie",
+		startAngle: 180,
+		toolTipContent: "<b>{label}</b>: {y}",
+		showInLegend: "true",
+		legendText: "{label}",
+		indexLabel: "{label} - {y}",
+		dataPoints: @Html.Raw(Model.BirBucuk)
+	}]
+});
+    chart3.render();
+
+    var chart4 = new CanvasJS.Chart("au25", {
+	theme: "light1", // "light1", "light2", "dark1", "dark2"
+
+        animationEnabled: true,
+
+
+
+	title: {
+
+        },
+        axisY: {
+
+            includeZero: true
+        },
+        axisX: {
+
+            includeZero: true
+        },
+
+        subtitles: [{
+
+		text: "2,5 Gol"
+	}],
+	data: [{
+		type: "pie",
+		startAngle: 180,
+		toolTipContent: "<b>{label}</b>: {y}",
+		showInLegend: "true",
+		legendText: "{label}",
+		indexLabel: "{label} - {y}",
+		dataPoints: @Html.Raw(Model.IkiBucuk)
+	}]
+});
+chart4.render();
+
+    var chart5 = new CanvasJS.Chart("au35", {
+	theme: "light1", // "light1", "light2", "dark1", "dark2"
+
+        animationEnabled: true,
+
+
+	title: {
+
+        },
+        axisY: {
+
+            includeZero: true
+        },
+        axisX: {
+
+            includeZero: true
+        },
+
+        subtitles: [{
+
+		text: "3,5 Gol"
+	}],
+	data: [{
+		type: "pie",
+		startAngle: 180,
+		toolTipContent: "<b>{label}</b>: {y}",
+		showInLegend: "true",
+		legendText: "{label}",
+		indexLabel: "{label} - {y}",
+        dataPoints: @Html.Raw(Model.UcBucuk)
+	}]
+});
+chart5.render();
+
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".canvasjs-chart-canvas").css("width", "100%");
+        $(".canvasjs-chart-canvas").css("height", "260px");
+    })
+</script>
+<script type="text/javascript">
+
+    if (window.matchMedia("(max-width: 767px)").matches) {
+        $(".col-12").css("height", "");
+        $(".canvasjs-chart-canvas").css("position", "relative", "!important");
+        $(".canvasjs-chart-container").css("height", "auto", "!important");
+        $('.canvasjs-chart-canvas + .canvasjs-chart-canvas').remove();
+    }
+</script>
