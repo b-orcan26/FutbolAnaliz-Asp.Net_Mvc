@@ -4,7 +4,7 @@
 
 # Kullanılan teknolojiler ve kütüphaneler
  
-  Entity Framework , CanvasJS , Bootstrap , FontAwesome , JQuery , Ajax , Newtonsoft.Json
+  Entity Framework , CanvasJS , Bootstrap , FontAwesome , JQuery , Ajax 
   
  # Ekran Görüntüleri
  
